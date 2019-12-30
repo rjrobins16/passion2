@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home :: Primp </title>
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 70%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+</head>
+<body>
+{% block content %}
+<div class="w3-bar w3-light-grey">
+    <a href="#" class="w3-bar-item w3-button">Home</a>
+    <a href="{% url 'log_out' %}" class="w3-bar-item w3-button">Log Out</a>
+    <input type="text" class="w3-bar-item w3-input" placeholder="Search..">
+    <a href="#" class="w3-bar-item w3-button w3-pink">Go</a>
+</div>
+
+<p class="greeting">Logged in as, {{ user.username }}.</p>
+
+
+<button id = "use-location">Use my location</button><br/>
+<p id = "status"></p>
+<a id = "map-link" target="_blank"></a>
+<div id="map"></div>
+
+<script async defer
+        src=" https://maps.googleapis.com/maps/api/js?key=AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4&callback=initMap ">
+</script>
+<script src="{% static 'PrimpApp/home.js' %}" ></script>
+
+</body>
+{% endblock %}
+</html>

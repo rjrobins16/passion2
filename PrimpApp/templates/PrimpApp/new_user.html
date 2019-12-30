@@ -1,0 +1,27 @@
+{% extends 'PrimpApp/home.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>New User </title>
+</head>
+<body>
+
+
+<p class="recent"> New User Sign Up  </p>
+<div class="messages">
+    {{errors}}
+</div>
+<form method="post">
+
+    {%csrf_token%}
+    {{form.as_p}}
+    <button>Enter</button>
+</form>
+
+
+
+
+</body>
+{% endblock %}

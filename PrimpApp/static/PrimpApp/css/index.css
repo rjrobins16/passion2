@@ -1,0 +1,44 @@
+*{
+    font-family: 'Nunito', sans-serif;
+}
+
+body{
+    background: #d37385;
+    padding-bottom: 5%;
+    margin: 0;
+    height: 100%;
+    display: grid;
+}
+
+header{
+    padding-top: 8%;
+    text-align: center;
+}
+
+.logo{
+    height: auto;
+    width: 35%
+}
+
+#homepg{
+    text-align: center;
+}
+.tagline{
+    font-style: italic;
+    color: white;
+    font-size: 15pt;
+}
+#signupform{
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-size: 14pt;
+    color: white;
+    margin: auto;
+    display: block;
+}
+#signupbutton{
+    font-family: 'Raleway', sans-serif;
+    color: black;
+    background: white;
+    font-size: 15pt;
+}

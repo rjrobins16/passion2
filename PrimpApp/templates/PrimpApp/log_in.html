@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p class="recent"> Log In </p>
+
+<div class="messages">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+</div>
+
+<form action="{% url 'log_in' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Submit</button>
+</form>
+
+</body>
+</html>

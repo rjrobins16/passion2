@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile :: Primp </title>
+    <link rel="stylesheet" href="{% static 'PrimpApp/css/index.css'%}">
+</head>
+<body>
+Welcome to Primp.
+<div>
+    {{errors}}
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Submit</button>
+</form>
+
+
+</body>
+</html>
+
+
+
