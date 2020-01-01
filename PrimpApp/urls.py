@@ -11,5 +11,9 @@ urlpatterns = [
     path('log_in/', views.log_in, name="log_in"),
     path('profile/', views.profile, name='profile'),
     path('edit_profile/',views.edit_profile, name = 'edit_profile'),
-    path('update_location/',views.update_location, name = 'update_location')
+    path('update_location/',views.update_location, name = 'update_location'),
+    path('primper/<int:primpID>',views.primper, name='primper')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

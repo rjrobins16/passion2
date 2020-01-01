@@ -32,12 +32,26 @@
 </div>
 
 <p class="greeting">Logged in as, {{ user.username }}.</p>
+<p> <img src="{{user.profile.Profile_Picture}}" alt=""> </p>
 
 
 <button id = "use-location">Use my location</button><br/>
 <p id = "status"></p>
 <a id = "map-link" target="_blank"></a>
 <div id="map"></div>
+
+{% for post in Stylist %}
+
+{% if post.Profile_Picture %}
+<p>
+<img src="{{post.Profile_Picture.url}}" alt="img">
+</p>
+{% endif%}
+
+<a href="{%url 'primper' post.user_id%}"><p> {{post.user}}</p></a>
+<p> {{post.TypeofStylist}}</p>
+
+{% endfor %}
 
 <script async defer
         src=" https://maps.googleapis.com/maps/api/js?key=AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4&callback=initMap ">

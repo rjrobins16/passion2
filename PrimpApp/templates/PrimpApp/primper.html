@@ -5,19 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile :: Primp </title>
+    <title>{{thisInstance.user}} :: Primp </title>
 </head>
 <body>
-Welcome to Primp.
+
 <div>
+    {{thisInstance.user}}
+    {% if post.Profile_Picture %}
+    <img src="{{thisInstance.Profile_Picture.url}}" alt="img">
+    {% endif %}
+{{thisInstance.TypeofStylist}}
 
 </div>
 
-test
 
 
 </body>
 </html>
-
-
 

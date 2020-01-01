@@ -9,9 +9,8 @@ from .models import Profile
 from django.contrib.auth.models import User
 from json import loads
 
-
 # Create your views here.
-from django.http import HttpResponse
+
 
 def log_out(request):
     logout(request)
@@ -59,7 +58,8 @@ def log_in(request):
 
 def home(request):
     Stylist = Profile.objects.filter(is_stylist=True)
-    return render(request, "PrimpApp/home.html")
+    context = {'Stylist': Stylist}
+    return render(request, "PrimpApp/home.html", context)
 
 def profile(request):
     if request.method == "POST":
@@ -121,3 +121,8 @@ def update_location(request):
 
     return HttpResponse("HEY")
 
+def primper(request, primpID):
+    thisInstance = Profile.objects.get(user_id=primpID)
+    context = {
+        "thisInstance": thisInstance}
+    return render(request, "PrimpApp/primper.html", context)
