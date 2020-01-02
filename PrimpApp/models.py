@@ -10,11 +10,15 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     is_user = models.NullBooleanField(default = True)
     is_stylist = models.NullBooleanField(default=False)
-    latitude = models.DecimalField(max_digits = 9, decimal_places=6 , null=True)
+    latitude = models.DecimalField(max_digits = 9, decimal_places=6 , null=True, default=1)
     longitude = models.DecimalField(max_digits = 9, decimal_places=6, null=True, default=0)
     TypeofStylist = models.CharField(max_length = 100, null=True, default = "Cosmetologist")
     DateOfBirth = models.DateField(null=True, blank=True)
     Profile_Picture = models.ImageField(upload_to='media', null=True, blank=True)
+
+    def __str__(self):
+        return f"(user: {self.user}, is_stylist:{self.is_stylist},latitude:{self.latitude} " \
+               f" longitude:{self.longitude}, TypeofStylist:{self.TypeofStylist}, DateOfBirth:{self.DateOfBirth})"
 
 # @receiver(post_save, sender=User)
 # def create_user_profile(sender, instance, created, **kwargs):

@@ -37,7 +37,6 @@
 
 <button id = "use-location">Use my location</button><br/>
 <p id = "status"></p>
-<a id = "map-link" target="_blank"></a>
 <div id="map"></div>
 
 {% for post in Stylist %}
@@ -53,10 +52,84 @@
 
 {% endfor %}
 
+<script>
+
+    let my_stylist = '{{ Stylist }}';
+
+    function initMap() {
+
+    let latitude =2;
+    let longitude =2;
+
+    function Locator() {
+
+        const status = document.querySelector('#status');
+
+        function success(position) {
+            let latitude  = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            console.log(latitude, longitude);
+
+            fetch("/update_location/", {
+                method: "PUT",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    latitude: latitude,
+                    longitude: longitude,
+                })
+            })
+                .then(data => data.text())
+
+                .then(info=> {
+                    console.log(info)
+                });
+
+
+            status.textContent = '';
+            // The location of the current user
+            let usersLocation = {lat: latitude, lng: longitude};
+            // The map, centered at usersLocation
+            let map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 10, center: usersLocation});
+            // The marker, positioned at usersLocation
+            let marker = new google.maps.Marker({position: usersLocation, map: map});
+
+        }
+
+        function error() {
+            status.textContent = 'Unable to retrieve your location';
+        }
+
+        if (!navigator.geolocation) {
+            status.textContent = 'Geolocation is not supported by your browser';
+        } else {
+            status.textContent = 'Locating…';
+            navigator.geolocation.getCurrentPosition(success, error);
+        }
+
+    }
+
+
+
+
+    let home = {lat: 35.1495, lng:-90.0908202 };
+    // The map, centered at home
+    let map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 8, center: home});
+    // The marker positioned at userslocation
+    let marker = new google.maps.Marker({position: home, map: map});
+
+    document.querySelector('#use-location').addEventListener('click', Locator);
+}
+</script>
+
 <script async defer
         src=" https://maps.googleapis.com/maps/api/js?key=AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4&callback=initMap ">
 </script>
-<script src="{% static 'PrimpApp/home.js' %}" ></script>
+
 
 </body>
 {% endblock %}

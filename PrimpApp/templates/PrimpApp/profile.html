@@ -10,10 +10,14 @@
 <body>
 Welcome to Primp.
 <div>
-
+    {{errors}}
 </div>
 
-test
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Submit</button>
+</form>
 
 
 </body>

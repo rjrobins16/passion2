@@ -8,6 +8,7 @@ from .forms import NewUserForm, SignInForm, UserProfileForm
 from .models import Profile
 from django.contrib.auth.models import User
 from json import loads
+import json
 
 # Create your views here.
 
@@ -108,7 +109,18 @@ def edit_profile(request):
 
 
 def update_location(request):
+
+#     if request.method == "GET":
+#         loggedInUser = Profile(user_id = request.user.id)
+#         if loggedInUser:
+#             location = {
+#                  'latitude' : loggedInUser.latitude,
+#                  'longitude' : loggedInUser.longitude
+#             }
+#             return JsonResponse(location, safe=False)
+
     requestedPageInfo = loads(request.body)
+
     if request.method == "PUT":
         userLocation = Profile(user_id=request.user.id)
         if userLocation:
@@ -119,7 +131,7 @@ def update_location(request):
         else:
             return HttpResponse("TEST")
 
-    return HttpResponse("HEY")
+    return HttpResponse("Hey")
 
 def primper(request, primpID):
     thisInstance = Profile.objects.get(user_id=primpID)
