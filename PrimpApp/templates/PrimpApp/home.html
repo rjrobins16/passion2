@@ -19,6 +19,9 @@
             margin: 0;
             padding: 0;
         }
+        .okay{
+            max-height: 300px;
+        }
     </style>
 
 </head>
@@ -43,7 +46,7 @@
 
 {% if post.Profile_Picture %}
 <p>
-<img src="{{post.Profile_Picture.url}}" alt="img">
+<img class="okay" src="{{post.Profile_Picture.url}}" alt="img">
 </p>
 {% endif%}
 
@@ -52,78 +55,93 @@
 
 {% endfor %}
 
+
+<script type="text/javascript"> var tesst = "{{user.username}}";
+                                var currentuserlatitude = {{currentUser.latitude}};
+                                var currentuserlongitude = {{currentUser.longitude}};
+</script>
+<script>
+    var stylists = {{stylists|safe}};
+</script>
 <script>
 
-    let my_stylist = '{{ Stylist }}';
+     function initMap() {
+         console.log(stylists);
 
-    function initMap() {
+     function Locator() {
 
-    let latitude =2;
-    let longitude =2;
+         const status = document.querySelector('#status');
 
-    function Locator() {
+         function success(position) {
+             let latitude  = position.coords.latitude;
+             let longitude = position.coords.longitude;
+             console.log(latitude, longitude);
 
-        const status = document.querySelector('#status');
+             fetch("/update_location/", {
+                 method: "PUT",
+                 headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify({
+                     latitude: latitude,
+                     longitude: longitude,
+                 })
+             })
+                 .then(data => data.text())
 
-        function success(position) {
-            let latitude  = position.coords.latitude;
-            let longitude = position.coords.longitude;
-            console.log(latitude, longitude);
-
-            fetch("/update_location/", {
-                method: "PUT",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    latitude: latitude,
-                    longitude: longitude,
-                })
-            })
-                .then(data => data.text())
-
-                .then(info=> {
-                    console.log(info)
-                });
+                 .then(info=> {
+                     console.log(info)
+                 });
 
 
-            status.textContent = '';
-            // The location of the current user
-            let usersLocation = {lat: latitude, lng: longitude};
-            // The map, centered at usersLocation
-            let map = new google.maps.Map(
-                document.getElementById('map'), {zoom: 10, center: usersLocation});
-            // The marker, positioned at usersLocation
-            let marker = new google.maps.Marker({position: usersLocation, map: map});
-
-        }
-
-        function error() {
-            status.textContent = 'Unable to retrieve your location';
-        }
-
-        if (!navigator.geolocation) {
-            status.textContent = 'Geolocation is not supported by your browser';
-        } else {
-            status.textContent = 'Locating…';
-            navigator.geolocation.getCurrentPosition(success, error);
-        }
-
-    }
+             status.textContent = '';
 
 
+         }
 
+         function error() {
+             status.textContent = 'Unable to retrieve your location';
+         }
 
-    let home = {lat: 35.1495, lng:-90.0908202 };
-    // The map, centered at home
-    let map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 8, center: home});
-    // The marker positioned at userslocation
-    let marker = new google.maps.Marker({position: home, map: map});
+         if (!navigator.geolocation) {
+             status.textContent = 'Geolocation is not supported by your browser';
+         } else {
+             status.textContent = 'Locating…';
+             navigator.geolocation.getCurrentPosition(success, error);
+         }
 
-    document.querySelector('#use-location').addEventListener('click', Locator);
-}
+     }
+
+     // Initial Map options
+     let home = {lat: currentuserlatitude, lng:currentuserlongitude };
+     // initialize map, centered at currentuserslocation
+     let map = new google.maps.Map(
+         document.getElementById('map'), {zoom: 5, center: home});
+     // The marker positioned at currentuserlocation
+     let marker = new google.maps.Marker({position: home, map: map});
+
+     stylists.forEach(element => console.log(element.fields.latitude));
+     const stylistCoords = stylists.map(function (stylist) {
+         return  {coords: {lat: parseInt(stylist.fields.latitude), lng: parseInt( stylist.fields.longitude)}};
+
+     });
+
+     console.log(stylistCoords);
+
+     for(var i=0; i < stylistCoords.length; i++){
+         addMarker(stylistCoords[i]);
+     }
+
+     function addMarker(props) {
+         var marker = new google.maps.Marker({
+             position: props.coords,
+             map: map,
+
+         });
+
+         document.querySelector('#use-location').addEventListener('click', Locator);
+     }}
 </script>
 
 <script async defer

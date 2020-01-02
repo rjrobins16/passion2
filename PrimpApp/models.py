@@ -8,10 +8,9 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    is_user = models.NullBooleanField(default = True)
-    is_stylist = models.NullBooleanField(default=False)
-    latitude = models.DecimalField(max_digits = 9, decimal_places=6 , null=True, default=1)
-    longitude = models.DecimalField(max_digits = 9, decimal_places=6, null=True, default=0)
+    is_stylist = models.BooleanField(blank=True, default=False)
+    latitude = models.DecimalField(max_digits = 10, decimal_places=8 , null=True, default=35.148272)
+    longitude = models.DecimalField(max_digits = 10, decimal_places=8, null=True, default=-90.1108723)
     TypeofStylist = models.CharField(max_length = 100, null=True, default = "Cosmetologist")
     DateOfBirth = models.DateField(null=True, blank=True)
     Profile_Picture = models.ImageField(upload_to='media', null=True, blank=True)

@@ -9,6 +9,8 @@ from .models import Profile
 from django.contrib.auth.models import User
 from json import loads
 import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
 
 # Create your views here.
 
@@ -59,7 +61,11 @@ def log_in(request):
 
 def home(request):
     Stylist = Profile.objects.filter(is_stylist=True)
-    context = {'Stylist': Stylist}
+    Stylist_serialized = serializers.serialize('json',Stylist)
+    currentUser = request.user.profile
+    context = {'Stylist': Stylist,
+                'stylists': Stylist_serialized,
+                'currentUser': currentUser}
     return render(request, "PrimpApp/home.html", context)
 
 def profile(request):
@@ -96,7 +102,13 @@ def edit_profile(request):
             else:
                 tempImageFiles = tempImageFiles['Profile_Picture']
 
-            profile_form = Profile(Profile_Picture = tempImageFiles, DateOfBirth = request.POST['DateOfBirth'], user = request.user)
+            profile_form = Profile(Profile_Picture = tempImageFiles,
+                                    DateOfBirth = request.POST['DateOfBirth'],
+                                    user = request.user,
+                                    is_stylist = request.POST['is_stylist'],
+                                    latitude = request.POST['latitude'],
+                                    longitude = request.POST['longitude'],
+                                    TypeofStylist = request.POST['TypeofStylist'])
             profile_form.save()
         return redirect('home')
 
