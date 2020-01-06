@@ -4,7 +4,7 @@ from django.contrib.auth import logout, login, authenticate
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .forms import NewUserForm, SignInForm, AllUsersForm
+from .forms import NewUserForm, SignInForm, AllUsersForm,AllUsersForm2
 from .models import AllUser
 from django.contrib.auth.models import User
 from json import loads
@@ -82,8 +82,9 @@ def filter_stylist(request):
 
 
 def profile(request):
+
     if request.method == "POST":
-        form = AllUsersForm(request.POST)
+        form = AllUsersForm2(request.POST)
         if form.is_valid():
             tempImageFile = request.FILES
             if not tempImageFile:
@@ -105,7 +106,7 @@ def profile(request):
 
     else:
         context = {
-            'form': AllUsersForm()
+            'form': AllUsersForm2()
         }
     return render(request, "PrimpApp/profile.html", context)
 

@@ -25,3 +25,36 @@ header{
 #ok{
     font-size: 13pt;
 }
+#container{
+    display: grid;
+    grid-column: 1/4;
+    grid-column-template: 33% 33%, 33%;
+
+}
+.okay{
+    display: inline-block;
+    grid-column: 1;
+    padding-left: 2%;
+
+}
+.usersid{
+    display: inline-block;
+    grid-column: 2;
+}
+
+.stylistid{
+    display: inline-block;
+    grid-column:3;
+}
+#tester{
+    display: inline-block;
+    text-align: center;
+}
+img {
+    height: 120px;
+}
+
+.cover {
+    width: 360px;
+    object-fit: cover;
+}

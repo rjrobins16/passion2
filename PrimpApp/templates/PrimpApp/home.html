@@ -54,10 +54,7 @@
         <label for="maxRadius">Find locations within
             <input name="maxRadius" id="maxRadius" type="number" value="5" min="1" />
         </label>
-        <label for="userAddress"> miles of
-            <input name="userAddress" id="userAddress" type="text" placeholder="Your Address" value="333 W Camden St, Baltimore MD"/>
-        </label>
-        <button onclick="" id="submitLocationSearch">Search</button>
+        <button id="submitLocationSearch">Search</button>
     </form>
 
     <h2 id="location-search-alert">All Locations</h2>
@@ -66,9 +63,9 @@
 
     <div id="stylists-near-you"></div>
 
+    <p id="tester"> Stylists in Your Area:</p>
+<div id="container">
 
-
-<p> STYLIST IN YOUR AREA:</p>
 
 {% for post in Stylist %}
 
@@ -78,10 +75,11 @@
 </p>
 {% endif%}
 
-<a href="{%url 'primper' post.user_id%}"><p> {{post.user}}</p></a>
-<p> {{post.TypeofStylist}}</p>
+<a class="usersid" href="{%url 'primper' post.user_id%}"><p> {{post.user}}</p></a>
+<p class="stylistid"> {{post.TypeofStylist}}</p>
 
 {% endfor %}
+</div>
 
 
 <script type="text/javascript"> var tesst = "{{user.username}}";
@@ -98,8 +96,9 @@ var currentuserlongitude = {{currentUserlng}};
 
         function Locator() {
             const status = document.querySelector('#status');
+
             function success(position) {
-                let latitude  = position.coords.latitude;
+                let latitude = position.coords.latitude;
                 let longitude = position.coords.longitude;
                 console.log(latitude, longitude);
                 fetch("/update_location/", {
@@ -114,14 +113,16 @@ var currentuserlongitude = {{currentUserlng}};
                     })
                 })
                     .then(data => data.text())
-                    .then(info=> {
+                    .then(info => {
                         console.log(info)
                     });
                 status.textContent = '';
             }
+
             function error() {
                 status.textContent = 'Unable to retrieve your location';
             }
+
             if (!navigator.geolocation) {
                 status.textContent = 'Geolocation is not supported by your browser';
             } else {
@@ -131,26 +132,30 @@ var currentuserlongitude = {{currentUserlng}};
 
         }
 
-
         var locations = stylists;
-        console.log(locations,stylists);
+        console.log(locations, stylists);
         var bounds = new google.maps.LatLngBounds();
         var markers = [];
         console.log("hey");
         var infoWindowContent = [];
-        let home = {lat: currentuserlatitude, lng:currentuserlongitude };
+        let home = {lat: currentuserlatitude, lng: currentuserlongitude};
 
-        let map = new google.maps.Map(document.getElementById('map'),{zoom:2, center:new google.maps.LatLng(currentuserlatitude,currentuserlongitude)});
+        let map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 2,
+            center: new google.maps.LatLng(currentuserlatitude, currentuserlongitude)
+        });
 
         // initialize map, centered at currentuserslocation
 
         // The marker positioned at currentuserlocation
-        let newmarker = new google.maps.Marker({position: home,
+        let newmarker = new google.maps.Marker({
+            position: home,
             icon: {
-                url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png" },
-            content:"YOU ARE HERE.",
-            map: map});
-
+                url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+            },
+            content: "YOU ARE HERE.",
+            map: map
+        });
 
 
         locations.forEach(function (location) {
@@ -158,30 +163,30 @@ var currentuserlongitude = {{currentUserlng}};
             markers.push([location.fields.BusinessName, location.fields.lat, location.fields.lng]);
             infoWindowContent.push(['<h2>' + location.fields.BusinessName + '</h2> ' + " <p>"
             + location.fields.address + " " + location.fields.city + " " +
-            location.fields.state + " " + location.fields.zip +" </p>" ]);
+            location.fields.state + " " + location.fields.zip + " </p>"]);
 
         });
 
-        var infoWindow = new google.maps.InfoWindow(),marker, i;
+        var infoWindow = new google.maps.InfoWindow(), marker, i;
 
-        for(i=0; i<markers.length; i++){
+        for (i = 0; i < markers.length; i++) {
             var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
             bounds.extend(position);
             marker = new google.maps.Marker({
-                position:position,
-                map:map,
-                title:markers[i][0]
+                position: position,
+                map: map,
+                title: markers[i][0]
             });
 
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                return function() {
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
                     infoWindow.setContent(infoWindowContent[i][0]);
                     infoWindow.open(map, marker);
                 }
             })(marker, i));
 
             if (locations.length > 1) {
-                var maphome = new google.maps.LatLng(currentuserlatitude,currentuserlongitude);
+                var maphome = new google.maps.LatLng(currentuserlatitude, currentuserlongitude);
                 map.fitBounds(bounds);
                 map.setCenter(home);
                 map.setZoom(25);
@@ -192,12 +197,88 @@ var currentuserlongitude = {{currentUserlng}};
             }
 
         }
-        function filterDistance(userLat,userLng,StylistLat,StylistLng){
+
+        function filterStylists(param) {
+            var geocoder = new google.maps.Geocoder();
+            var maxRadius = parseInt(document.getElementById('maxRadius').value, 10);
+            if (param && maxRadius) {
+                loco = getDistancedetails(param);
+            }
 
         }
+
+        var stylistcoords = stylists.map(function (stylist) {
+            return {
+                lat: parseFloat(stylist.fields.lat),
+                lng: parseFloat(stylist.fields.lng),
+                name: stylist.fields.businessname,
+            }
+        });
+        function getDistancedetails(loco) {
+            var key = 'AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4';
+            // #define user coordinates
+            var userlocation = new google.maps.LatLng(currentuserlatitude, currentuserlongitude);
+
+
+            var filteredStylists = stylistcoords.filter(isWithinRadius());
+
+
+            // #function to get radius/distance
+            function isWithinRadius(stylistLocation) {
+                var locationLatLng = new google.maps.LatLng(stylistLocation.lat, stylistLocation.lng);
+                var distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(locationLatLng, userlocation);
+                // #sends distance to converter funct
+                return convertMetersToMiles(distanceBetween) <= maxRadius;
+            }
+
+
+            if (filteredStylists.length > 0) {
+                PrimpMap(filteredStylists);
+                createListOfstylists(filteredStylists);
+                searchResultsAlert.innerHTML = 'Stylist Locations within ' + maxRadius + ' miles of ' + userAddress + ':';
+            } else {
+                console.log("nothing found!");
+                document.getElementById('stylists-near-you').innerHTML = '';
+                searchResultsAlert.innerHTML = 'Sorry, no stylists were found within ' + maxRadius + ' miles of ' + userAddress + '.';
+            }
+
+
+
+        }
+
+
+        //converts meters to miles
+
+        function convertMetersToMiles(meters) {
+            return (meters * 0.000621371);
+        }
+
+        //dynamic stylist list
+
+
+        function createListOfstylists(locations) {
+            var locationsList = document.getElementById('stylists-near-you');
+
+            // Clear any existing locations from the previous search first
+            locationsList.innerHTML = '';
+
+            locations.forEach(function (location) {
+                var eachStylist = document.createElement('div');
+                var StylistInfo = "<h3>" + location.fields.businessname + "</h3><p>" + location.fields.address + "</p>" +
+                    "<p>" + location.fields.city + ", " + location.fields.state + " " + location.fields.zip + "</p>";
+                eachStylist.setAttribute("class", 'stylists-near-you-box');
+                eachStylist.innerHTML = StylistInfo;
+                locationsList.appendChild(eachStylist);
+            });
+        }
+
+
         document.querySelector('#use-location').addEventListener('click', Locator);
 
+        document.querySelector('#submitLocationSearch').addEventListener('click', filterStylists(stylistcoords))
     }
+
+
 
 </script>
 <script defer

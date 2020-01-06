@@ -2,39 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11ff46a3-50e7-4790-a221-d695993451ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/student.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0002_auto_20191220_1821.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0003_auto_20191223_1419.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0004_auto_20191223_1650.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0005_auto_20191226_1716.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0006_auto_20191226_1754.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0007_auto_20191227_0604.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0008_auto_20191227_0637.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0009_auto_20191227_0639.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0010_auto_20191227_0707.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0011_auto_20191227_1651.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0012_auto_20191231_1531.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0013_auto_20191231_1533.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0014_auto_20200101_1958.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0015_auto_20200102_1419.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0016_auto_20200102_1448.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/migrations/0017_profile_title.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/edit_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/edit_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/profile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/log_in.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/log_in.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpProject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,10 +127,10 @@
       <screen x="0" y="27" width="1600" height="822" />
     </state>
     <state x="409" y="49" width="772" height="775" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1600.822@0.27.1600.822" timestamp="1578134496556" />
-    <state x="169" y="166" width="1431" height="683" key="dock-window-1" timestamp="1578308281776">
+    <state x="-1222" y="135" width="1431" height="683" key="dock-window-1" timestamp="1578318538084">
       <screen x="0" y="27" width="1600" height="822" />
     </state>
-    <state x="169" y="166" width="1431" height="683" key="dock-window-1/0.27.1600.822@0.27.1600.822" timestamp="1578308281776" />
+    <state x="-1222" y="135" width="1431" height="683" key="dock-window-1/0.27.1600.822@0.27.1600.822" timestamp="1578318538084" />
     <state x="683" y="58" width="917" height="758" key="find.popup" timestamp="1577811487049">
       <screen x="0" y="27" width="1600" height="822" />
     </state>

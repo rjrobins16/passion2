@@ -53,3 +53,18 @@ class AllUsersForm(ModelForm):
                     }
         fields = '__all__'
 
+
+class AllUsersForm2(ModelForm):
+    class Meta:
+
+        widgets = {'DateOfBirth': DateInput(),
+                    'user':forms.HiddenInput(),
+                    'lat': forms.HiddenInput(),
+                    'lng':forms.HiddenInput(),
+                    'BusinessName':forms.HiddenInput(),
+                    'TypeofStylist':forms.HiddenInput()}
+        model = AllUser
+        labels = {
+                        "DateOfBirth": "Date of Birth "
+                    }
+        fields = '__all__'

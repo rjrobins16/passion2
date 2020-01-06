@@ -5,23 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Quicksand|Raleway:400,400i|Roboto:400,500i&display=swap" rel="stylesheet">
     <title>Profile :: Primp </title>
+    <link rel="stylesheet" href="{% static 'PrimpApp/css/profile.css'%}">
 </head>
 <body>
-Welcome to Primp, {{user.username}}.
-<div>
-    {{errors}}
+
+<div id="ok" class="w3-bar w3-white">
+
+    <a href="{% url 'home' %}" class="w3-bar-item w3-button">Home</a>
+    <a href="{% url 'edit_profile' %}" class="w3-bar-item w3-button">Profile</a>
+    <a href="{% url 'log_in' %}" class="w3-bar-item w3-button">Log In</a>
+    <a href="{% url 'log_out' %}" class="w3-bar-item w3-button">Log Out</a>
+    <span class="greeting">Logged in as {{ user.username }}</span>
 </div>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>Submit</button>
-</form>
+<header id="Title">
+
+   Welcome to Primp, {{user.username}}!
+    Complete your profile below.
+</header>
+
+<div id="container">
+    <div class="errors">
+        {{errors}}
+    </div>
+    <form id="profileform" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button2">Submit</button>
+    </form>
+
+</div>
+
+
 
 
 </body>
 </html>
-
-
 
