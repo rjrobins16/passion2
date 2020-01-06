@@ -2,23 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'PrimpApp/css/loginpage.css'%}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Quicksand|Raleway:400,400i|Roboto:400,500i&display=swap" rel="stylesheet">
+    <title>Log In :: Primp</title>
 </head>
 <body>
 
-<p class="recent"> Log In </p>
+<header>
+<a href="{% url 'index' %}">
+    <img class="logo" src="{% static 'PrimpApp/images/topopt2.png' %}">
+</a>
+
+</header>
 
 <div class="messages">
     {% for message in messages %}
+    Error:
     {{ message }}
     {% endfor %}
+    {{errors}}
 </div>
 
-<form action="{% url 'log_in' %}" method="POST">
+<p id="title"> Welcome back! Sign in to continue. </p>
+
+<form id="loginform" action="{% url 'log_in' %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button>Submit</button>
+    <button class="button3">LOG IN</button>
 </form>
-
+<a href="{% url 'index' %}">
+    <div id="announcementbar">
+        New to Primp? Click here to create a new account.
+    </div>
+</a>
 </body>
 </html>

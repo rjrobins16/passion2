@@ -1,0 +1,105 @@
+*{
+    font-family: 'Nunito', sans-serif;
+}
+
+
+html{
+    margin: 0;
+    height: 100%;
+}
+body{
+    grid-template-columns: 33% 33% 33% ;
+    /*background: #f7e2e6;*/
+    background-attachment: fixed;
+    background-image: linear-gradient(#f7e2e6, #c26879);
+    background-repeat: no-repeat;
+    margin: 0;
+    height: 100%;
+    padding-bottom: 5%;
+    display: grid;
+}
+.logo{
+    padding-top: 1%;
+    max-width: 20%;
+    height: auto;
+    grid-column: 1/4;
+
+}
+header{
+    width: 100%;
+    margin:0;
+    grid-column: 1/4;
+    text-align: center;
+}
+#loginform{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    grid-column: 2;
+    padding: 3%;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-size: 12pt;
+    color: black;
+    background: white;
+    border-radius: 13px;
+}
+
+.messages{
+    text-align: center;
+    color: red;
+    grid-column: 2;
+}
+
+#title {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    grid-column: 1/4;
+    text-align: center;
+    font-size: 25px;
+}
+#announcementbar{
+    text-align: center;
+    grid-column: 1/4;
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0.5%;
+    font-size: 14pt;
+    width: 100%;
+    color:black;
+    background: white;
+}
+#announcementbar:hover{
+    opacity: 1;
+    background: white;
+}
+#announcementbar.a:link{
+    text-decoration: none;
+}
+#announcementbar.a:visited{
+    text-decoration: none;
+}
+.button3 {
+    font-family: 'Poppins', sans-serif;
+    background-color: #de798c;
+    opacity: 1;
+    border: none;
+    border-radius: 4px;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button3:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}

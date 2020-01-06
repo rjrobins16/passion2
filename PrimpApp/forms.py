@@ -1,35 +1,28 @@
-from django.forms import ModelForm
 from django import forms
-from .models import Profile
+from django.forms import ModelForm
+from .models import AllUser
 from django.contrib.auth.models import User
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-
-class UserProfileForm(ModelForm):
-
-    class Meta:
-       widgets = {'DateOfBirth': DateInput(),
-                   'is_stylist':forms.HiddenInput(),
-                   'latitude':forms.HiddenInput(),
-                   'longitude':forms.HiddenInput(),
-                   'TypeofStylist':forms.HiddenInput()}
-       model = Profile
-       fields = ['DateOfBirth', 'Profile_Picture','is_stylist','latitude','longitude','TypeofStylist']
-
-
+# all users main account sign up
 class NewUserForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.CharField(max_length=75, required=True)
 
     class Meta:
         model = User
+        labels = {
+                "email": "Email "
+            }
         fields = ['username', 'password', 'first_name', 'last_name', 'email']
         help_texts = {
                             'username': None,
                             'email': None,
                         }
 
+# main user log in for all users
 
 class SignInForm(ModelForm):
 
@@ -37,15 +30,26 @@ class SignInForm(ModelForm):
      class Meta:
              model = User
              fields = ['username', 'password']
+             help_texts = {
+                                         'username': None,
+                                     }
 
-class StylistSignUp(ModelForm):
 
-    password = forms.CharField(widget=forms.PasswordInput)
+#intial profile completion, AllUsers form
+
+class AllUsersForm(ModelForm):
     class Meta:
-        model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email']
-        help_texts = {
-                    'username': None,
-                    'email': None,
-                }
+
+        widgets = {'DateOfBirth': DateInput(),
+                    'AccountType': forms.HiddenInput(),
+                    'BusinessName':forms.HiddenInput(),
+                    'user':forms.HiddenInput(),
+                    'lat': forms.HiddenInput(),
+                    'lng':forms.HiddenInput(),
+                    'TypeofStylist':forms.HiddenInput()}
+        model = AllUser
+        labels = {
+                        "DateOfBirth": "Date of Birth "
+                    }
+        fields = '__all__'
 

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{% static 'PrimpApp/css/home.css'%}">
     <title>Home :: Primp </title>
 
@@ -28,24 +29,44 @@
 </head>
 <body>
 {% block content %}
-<header>
-    <div class="w3-bar w3-light-grey">
-        <a href="#" class="w3-bar-item w3-button">Home</a>
-        <a href="{% url 'log_out' %}" class="w3-bar-item w3-button">Log Out</a>
-        <input type="text" class="w3-bar-item w3-input" placeholder="Search..">
-        <a href="#" class="w3-bar-item w3-button w3-pink">Go</a>
-        <span class="greeting">Logged in as, {{ user.username }}.</span>
+<div id="ok" class="w3-bar w3-white">
 
-    </div>
+    <a href="{% url 'home' %}" class="w3-bar-item w3-button">Home</a>
+    <a href="{% url 'edit_profile' %}" class="w3-bar-item w3-button">Profile</a>
+    <a href="{% url 'log_in' %}" class="w3-bar-item w3-button">Log In</a>
+    <a href="{% url 'log_out' %}" class="w3-bar-item w3-button">Log Out</a>
+    <span class="greeting">Logged in as {{ user.username }}</span>
+</div>
+<header>
+
     <img id="logos" src="{% static 'PrimpApp/images/primp.png' %}">
 </header>
-
-<p> <img src="{{user.profile.Profile_Picture}}" alt=""> </p>
+{% if user.alluser.Profile_Picture %}
+<p> <img src="{{user.alluser.Profile_Picture}}" alt=""> </p>
+{% endif %}
 
 
 <button id = "use-location">Use my location</button><br/>
 <p id = "status"></p>
 <div id="map"></div>
+<div class="content">
+    <form action="#" method="post">
+        <label for="maxRadius">Find locations within
+            <input name="maxRadius" id="maxRadius" type="number" value="5" min="1" />
+        </label>
+        <label for="userAddress"> miles of
+            <input name="userAddress" id="userAddress" type="text" placeholder="Your Address" value="333 W Camden St, Baltimore MD"/>
+        </label>
+        <button onclick="" id="submitLocationSearch">Search</button>
+    </form>
+
+    <h2 id="location-search-alert">All Locations</h2>
+
+    <div id="stylists-near-you-map"></div>
+
+    <div id="stylists-near-you"></div>
+
+
 
 <p> STYLIST IN YOUR AREA:</p>
 
@@ -53,7 +74,7 @@
 
 {% if post.Profile_Picture %}
 <p>
-<img class="okay" src="{{post.Profile_Picture.url}}" alt="img">
+    <img class="okay" src="{{post.Profile_Picture.url}}" alt="img">
 </p>
 {% endif%}
 
@@ -64,111 +85,125 @@
 
 
 <script type="text/javascript"> var tesst = "{{user.username}}";
-                                var currentuserlatitude = {{currentUser.latitude}};
-                                var currentuserlongitude = {{currentUser.longitude}};
+console.log(tesst);
+var currentuserlatitude = {{currentUserlat}};
+var currentuserlongitude = {{currentUserlng}};
 </script>
 <script>
     var stylists = {{stylists|safe}};
 </script>
+
 <script>
+    function PrimpMap() {
 
-     function initMap() {
-         console.log(stylists);
+        function Locator() {
+            const status = document.querySelector('#status');
+            function success(position) {
+                let latitude  = position.coords.latitude;
+                let longitude = position.coords.longitude;
+                console.log(latitude, longitude);
+                fetch("/update_location/", {
+                    method: "PUT",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        lat: latitude,
+                        lng: longitude,
+                    })
+                })
+                    .then(data => data.text())
+                    .then(info=> {
+                        console.log(info)
+                    });
+                status.textContent = '';
+            }
+            function error() {
+                status.textContent = 'Unable to retrieve your location';
+            }
+            if (!navigator.geolocation) {
+                status.textContent = 'Geolocation is not supported by your browser';
+            } else {
+                status.textContent = 'Locating…';
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
 
-     function Locator() {
-
-         const status = document.querySelector('#status');
-
-         function success(position) {
-             let latitude  = position.coords.latitude;
-             let longitude = position.coords.longitude;
-             console.log(latitude, longitude);
-
-             fetch("/update_location/", {
-                 method: "PUT",
-                 headers: {
-                     'Accept': 'application/json',
-                     'Content-Type': 'application/json'
-                 },
-                 body: JSON.stringify({
-                     latitude: latitude,
-                     longitude: longitude,
-                 })
-             })
-                 .then(data => data.text())
-
-                 .then(info=> {
-                     console.log(info)
-                 });
+        }
 
 
-             status.textContent = '';
+        var locations = stylists;
+        console.log(locations,stylists);
+        var bounds = new google.maps.LatLngBounds();
+        var markers = [];
+        console.log("hey");
+        var infoWindowContent = [];
+        let home = {lat: currentuserlatitude, lng:currentuserlongitude };
+
+        let map = new google.maps.Map(document.getElementById('map'),{zoom:2, center:new google.maps.LatLng(currentuserlatitude,currentuserlongitude)});
+
+        // initialize map, centered at currentuserslocation
+
+        // The marker positioned at currentuserlocation
+        let newmarker = new google.maps.Marker({position: home,
+            icon: {
+                url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png" },
+            content:"YOU ARE HERE.",
+            map: map});
 
 
-         }
 
-         function error() {
-             status.textContent = 'Unable to retrieve your location';
-         }
+        locations.forEach(function (location) {
+            console.log(location);
+            markers.push([location.fields.BusinessName, location.fields.lat, location.fields.lng]);
+            infoWindowContent.push(['<h2>' + location.fields.BusinessName + '</h2> ' + " <p>"
+            + location.fields.address + " " + location.fields.city + " " +
+            location.fields.state + " " + location.fields.zip +" </p>" ]);
 
-         if (!navigator.geolocation) {
-             status.textContent = 'Geolocation is not supported by your browser';
-         } else {
-             status.textContent = 'Locating…';
-             navigator.geolocation.getCurrentPosition(success, error);
-         }
+        });
 
-     }
+        var infoWindow = new google.maps.InfoWindow(),marker, i;
 
-     // Initial Map options
-     let home = {lat: currentuserlatitude, lng:currentuserlongitude };
-     // initialize map, centered at currentuserslocation
-     let map = new google.maps.Map(
-         document.getElementById('map'), {zoom: 5, center: home});
-     // The marker positioned at currentuserlocation
-     let marker = new google.maps.Marker({position: home, map: map});
+        for(i=0; i<markers.length; i++){
+            var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position:position,
+                map:map,
+                title:markers[i][0]
+            });
 
-     stylists.forEach(element => console.log(element.fields.latitude));
-     const stylistCoords = stylists.map(function (stylist) {
-         return {
-             coords: {lat: parseFloat(stylist.fields.latitude), lng: parseFloat(stylist.fields.longitude)},
-             content: stylist.fields.title,
-     }
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infoWindow.setContent(infoWindowContent[i][0]);
+                    infoWindow.open(map, marker);
+                }
+            })(marker, i));
 
-     });
+            if (locations.length > 1) {
+                var maphome = new google.maps.LatLng(currentuserlatitude,currentuserlongitude);
+                map.fitBounds(bounds);
+                map.setCenter(home);
+                map.setZoom(25);
+            } else {
+                var center = new google.maps.LatLng(locations[0].fields.lat, locations[0].fields.lng);
+                map.setCenter(center);
+                map.setZoom(15);
+            }
 
-     // console.log(stylistCoords);
+        }
+        function filterDistance(userLat,userLng,StylistLat,StylistLng){
 
-     for(var i=0; i < stylistCoords.length; i++){
-         console.log(stylistCoords[i]);
-         addMarker(stylistCoords[i]);
-     }
+        }
+        document.querySelector('#use-location').addEventListener('click', Locator);
 
-     function addMarker(props) {
-         var marker = new google.maps.Marker({
-             position: props.coords,
-             map: map,
+    }
 
-         });
-         if(props.content){
-             var infoWindow = new google.maps.InfoWindow({
-                 content:props.content
-             });
-
-             marker.addListener('click', function(){
-                 infoWindow.open(map, marker);
-             });
-         }
-
-         document.querySelector('#use-location').addEventListener('click', Locator);
-     }}
 </script>
-
-<script async defer
-        src=" https://maps.googleapis.com/maps/api/js?key=AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4&callback=initMap ">
+<script defer
+        src=" https://maps.googleapis.com/maps/api/js?key=AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4&callback=PrimpMap ">
 </script>
-
-
+</div>
 </body>
 {% endblock %}
 </html>

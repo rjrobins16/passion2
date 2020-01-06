@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'PrimpApp/css/home.css'%}">
+    <title>Home :: Primp </title>
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 70%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .okay{
+            max-height: 300px;
+        }
+    </style>
+
+</head>
+<body>
+{% block content %}
+<header>
+    <div class="w3-bar w3-light-grey">
+        <a href="#" class="w3-bar-item w3-button">Home</a>
+        <a href="{% url 'log_out' %}" class="w3-bar-item w3-button">Log Out</a>
+        <input type="text" class="w3-bar-item w3-input" placeholder="Search..">
+        <a href="#" class="w3-bar-item w3-button w3-pink">Go</a>
+        <span class="greeting">Logged in as, {{ user.username }}.</span>
+
+    </div>
+    <img id="logos" src="{% static 'PrimpApp/images/primp.png' %}">
+</header>
+
+<p> <img src="{{user.alluser.Profile_Picture}}" alt=""> </p>
+
+
+<button id = "use-location">Use my location</button><br/>
+<p id = "status"></p>
+<div id="map"></div>
+
+<p> STYLIST IN YOUR AREA:</p>
+
+{% for post in Stylist %}
+
+{% if post.Profile_Picture %}
+<p>
+    <img class="okay" src="{{post.Profile_Picture.url}}" alt="img">
+</p>
+{% endif%}
+
+<a href="{%url 'primper' post.user_id%}"><p> {{post.user}}</p></a>
+<p> {{post.TypeofStylist}}</p>
+
+{% endfor %}
+
+
+<script type="text/javascript"> var tesst = "{{user.username}}";
+console.log(tesst);
+var currentuserlatitude = {{currentUser.lat}};
+var currentuserlongitude = {{currentUser.lng}};
+</script>
+<script>
+    var stylists = {{stylists|safe}};
+</script>
+<script>
+    function initMap() {
+        console.log(stylists);
+        function Locator() {
+            const status = document.querySelector('#status');
+            function success(position) {
+                let latitude  = position.coords.latitude;
+                let longitude = position.coords.longitude;
+                console.log(latitude, longitude);
+                fetch("/update_location/", {
+                    method: "PUT",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude,
+                    })
+                })
+                    .then(data => data.text())
+                    .then(info=> {
+                        console.log(info)
+                    });
+                status.textContent = '';
+            }
+            function error() {
+                status.textContent = 'Unable to retrieve your location';
+            }
+            if (!navigator.geolocation) {
+                status.textContent = 'Geolocation is not supported by your browser';
+            } else {
+                status.textContent = 'Locating…';
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+        }
+        // Initial Map options
+        let home = {lat: currentuserlatitude, lng:currentuserlongitude };
+        // initialize map, centered at currentuserslocation
+        let map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 5, center: home});
+        // The marker positioned at currentuserlocation
+        let marker = new google.maps.Marker({position: home, map: map});
+        stylists.forEach(element => console.log(element.fields.latitude));
+        const stylistCoords = stylists.map(function (stylist) {
+            return {
+                coords: {lat: parseFloat(stylist.fields.latitude), lng: parseFloat(stylist.fields.longitude)},
+                content: stylist.fields.title,
+            }
+        });
+        // console.log(stylistCoords);
+        for(var i=0; i < stylistCoords.length; i++){
+            console.log(stylistCoords[i]);
+            addMarker(stylistCoords[i]);
+        }
+        function addMarker(props) {
+            var marker = new google.maps.Marker({
+                position: props.coords,
+                map: map,
+            });
+            if(props.content){
+                var infoWindow = new google.maps.InfoWindow({
+                    content:props.content
+                });
+                marker.addListener('click', function(){
+                    infoWindow.open(map, marker);
+                });
+            }
+            document.querySelector('#use-location').addEventListener('click', Locator);
+        }}
+</script>
+
+<script async defer
+        src=" https://maps.googleapis.com/maps/api/js?key=AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4&callback=initMap ">
+</script>
+
+
+</body>
+{% endblock %}
+</html>

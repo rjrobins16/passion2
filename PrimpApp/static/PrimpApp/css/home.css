@@ -1,3 +1,10 @@
+*{
+    font-family: 'Nunito', sans-serif;
+}
+
+html{
+    background: #fdf0d5;
+}
 #logos{
     height: auto;
     width: 15%;
@@ -5,4 +12,16 @@
 }
 header{
     text-align:center ;
+}
+.greeting{
+    padding-top: 4px;
+    font-size: 12pt;
+    display: block;
+    font-style: italic;
+    float: right;
+    color: darkslategrey;
+    padding-right: 2%;
+}
+#ok{
+    font-size: 13pt;
 }

@@ -4,8 +4,8 @@ from django.contrib.auth import logout, login, authenticate
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .forms import NewUserForm, SignInForm, UserProfileForm
-from .models import Profile
+from .forms import NewUserForm, SignInForm, AllUsersForm
+from .models import AllUser
 from django.contrib.auth.models import User
 from json import loads
 import json
@@ -55,46 +55,68 @@ def log_in(request):
             messages.error(request, "Wrong username or password")
             return redirect("log_in")
     context = {
+
         "form": SignInForm()
     }
     return render(request, "PrimpApp/log_in.html", context)
 
 def home(request):
-    Stylist = Profile.objects.filter(is_stylist=True)
-    Stylist_serialized = serializers.serialize('json',Stylist)
-    currentUser = request.user.profile
-    context = {'Stylist': Stylist,
-                'stylists': Stylist_serialized,
-                'currentUser': currentUser}
+    #sends current logged in user to page
+    currentUserlat = request.user.alluser.lat
+    currentUserlng= request.user.alluser.lng
+    #sends all stylist to page
+    Stylist = AllUser.objects.filter(AccountType='P')
+    Stylist_serialized = serializers.serialize('json', Stylist)
+    context = {
+        'Stylist':Stylist,
+        'stylists': Stylist_serialized,
+        'currentUserlat': currentUserlat,
+        'currentUserlng': currentUserlng}
     return render(request, "PrimpApp/home.html", context)
+
+def filter_stylist(request):
+    currentUser = request.user.alluser
+    usercoords = {currentUser.lat, currentUser.lng}
+
+
+
 
 def profile(request):
     if request.method == "POST":
-        form = UserProfileForm(request.POST)
+        form = AllUsersForm(request.POST)
         if form.is_valid():
             tempImageFile = request.FILES
             if not tempImageFile:
                 tempImageFile = ''
             else:
                 tempImageFile = tempImageFile['Profile_Picture']
-            userprofile = Profile(DateOfBirth=request.POST['DateOfBirth'], Profile_Picture = tempImageFile, user=request.user)
+            userprofile = AllUser(user=request.user,
+                                  AccountType = request.POST['AccountType'],
+                                  DateOfBirth=request.POST['DateOfBirth'],
+                                  Profile_Picture = tempImageFile,
+                                  address=request.POST['address'],
+                                  city = request.POST['city'],
+                                  state = request.POST['state'],
+                                  zip = request.POST['zip'],
+
+              )
             userprofile.save()
         return redirect("home")
 
     else:
         context = {
-            'form': UserProfileForm()
+            'form': AllUsersForm()
         }
     return render(request, "PrimpApp/profile.html", context)
 
 
 def edit_profile(request):
-    try: ProfileInstance = request.user.profile
-    except Profile.DoesNotExist:
-        ProfileInstance = Profile(user=request.user)
+    try: ProfileInstance = request.user.alluser
+    except AllUser.DoesNotExist:
+        ProfileInstance = AllUser(user=request.user)
 
     if request.method == "POST":
-        form = UserProfileForm(request.POST, request.FILES, instance=ProfileInstance)
+        form = AllUsersForm(request.POST, request.FILES, instance=ProfileInstance)
         if form.is_valid():
             tempImageFiles = request.FILES
             if not tempImageFiles:
@@ -102,20 +124,25 @@ def edit_profile(request):
             else:
                 tempImageFiles = tempImageFiles['Profile_Picture']
 
-            profile_form = Profile(Profile_Picture = tempImageFiles,
+            profile_form = AllUser(Profile_Picture = tempImageFiles,
+                                    AccountType = request.user.alluser.AccountType,
+                                    TypeofStylist=request.user.alluser.TypeofStylist,
+                                    BusinessName = request.user.alluser.BusinessName,
+                                    lat = request.user.alluser.lat,
+                                    lng = request.user.alluser.lng,
                                     DateOfBirth = request.POST['DateOfBirth'],
-                                    user = request.user,
-                                    is_stylist = request.POST['is_stylist'],
-                                    latitude = request.POST['latitude'],
-                                    longitude = request.POST['longitude'],
-                                    TypeofStylist = request.POST['TypeofStylist'])
+                                    address = request.POST['address'],
+                                    city = request.POST['city'],
+                                    state = request.POST['state'],
+                                    zip = request.POST['zip'],
+                                    user = request.user)
             profile_form.save()
         return redirect('home')
 
     else:
         context = {
-            'ProfileInstance': request.user.profile,
-                'form': UserProfileForm(instance=ProfileInstance)
+            'ProfileInstance': request.user.alluser,
+                'form': AllUsersForm(instance=ProfileInstance)
             }
     return render(request, "PrimpApp/edit_profile.html",context)
 
@@ -134,10 +161,10 @@ def update_location(request):
     requestedPageInfo = loads(request.body)
 
     if request.method == "PUT":
-        userLocation = Profile(user_id=request.user.id)
+        userLocation = AllUser(user_id=request.user.id)
         if userLocation:
-            userLocation.latitude = requestedPageInfo['latitude']
-            userLocation.longitude = requestedPageInfo['longitude']
+            userLocation.lat = requestedPageInfo['lat']
+            userLocation.lng = requestedPageInfo['lng']
             userLocation.save()
             return HttpResponse(userLocation)
         else:
@@ -146,7 +173,7 @@ def update_location(request):
     return HttpResponse("Hey")
 
 def primper(request, primpID):
-    thisInstance = Profile.objects.get(user_id=primpID)
+    thisInstance = StylistProfile.objects.get(user_id=primpID)
     context = {
         "thisInstance": thisInstance}
     return render(request, "PrimpApp/primper.html", context)
