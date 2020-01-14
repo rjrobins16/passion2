@@ -4,7 +4,7 @@ from django.contrib.auth import logout, login, authenticate
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .forms import NewUserForm, SignInForm, AllUsersForm,AllUsersForm2
+from .forms import NewUserForm, SignInForm, AllUsersForm, AllUsersForm2
 from .models import AllUser
 from django.contrib.auth.models import User
 from json import loads

@@ -2,12 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11ff46a3-50e7-4790-a221-d695993451ec" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/PrimpApp/media/204568_2003666614318_1323192469_2427250_721488_o.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/media/e3eff5_4b16588f6fc445aa8b4103644ff53effmv2_d_6000_4000_s_4_2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/media/s-l300.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/migrations/0004_auto_20200113_1923.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/migrations/0005_auto_20200114_1908.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/migrations/0006_auto_20200114_1911.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/editprofile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/images/newprimpmarker.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PrimpApp/static/tester.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimpApp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/loginpage.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/loginpage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/profile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
@@ -33,9 +43,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -65,7 +75,7 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.0" />
     <property name="jsx.switch.disabled" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../newStaticWebsite/about.css" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -85,6 +95,21 @@
       <recent name="$PROJECT_DIR$/PrimpApp/static/PrimpApp" />
       <recent name="$PROJECT_DIR$/PrimpApp/static" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="tester.js" type="MongoRunConfiguration" factoryName="Mongo" temporary="true">
+      <module name="PrimpProject" />
+      <setting name="path" value="$PROJECT_DIR$/PrimpApp/static/tester.js" />
+      <setting name="shellParams" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Mongo.tester.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -115,14 +140,18 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="332" y="195" width="421" height="487" key="FileChooserDialogImpl" timestamp="1578167904419">
+    <state x="62" y="153" width="665" height="568" key="#tester.js" timestamp="1578951639403">
       <screen x="0" y="27" width="1600" height="822" />
     </state>
-    <state x="332" y="195" width="421" height="487" key="FileChooserDialogImpl/0.27.1600.822@0.27.1600.822" timestamp="1578167904419" />
-    <state x="839" y="264" key="com.intellij.ide.util.TipDialog" timestamp="1578243565111">
+    <state x="62" y="153" width="665" height="568" key="#tester.js/0.27.1600.822@0.27.1600.822" timestamp="1578951639403" />
+    <state x="332" y="195" width="421" height="487" key="FileChooserDialogImpl" timestamp="1579027100964">
       <screen x="0" y="27" width="1600" height="822" />
     </state>
-    <state x="839" y="264" key="com.intellij.ide.util.TipDialog/0.27.1600.822@0.27.1600.822" timestamp="1578243565111" />
+    <state x="332" y="195" width="421" height="487" key="FileChooserDialogImpl/0.27.1600.822@0.27.1600.822" timestamp="1579027100964" />
+    <state x="839" y="264" key="com.intellij.ide.util.TipDialog" timestamp="1578932333590">
+      <screen x="0" y="27" width="1600" height="822" />
+    </state>
+    <state x="839" y="264" key="com.intellij.ide.util.TipDialog/0.27.1600.822@0.27.1600.822" timestamp="1578932333590" />
     <state x="409" y="49" width="772" height="775" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578134496556">
       <screen x="0" y="27" width="1600" height="822" />
     </state>

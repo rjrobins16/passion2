@@ -19,7 +19,7 @@ body{
     display: grid;
 }
 .logo{
-    padding-top: 1%;
+    padding-top: 4%;
     max-width: 20%;
     height: auto;
     grid-column: 1/4;

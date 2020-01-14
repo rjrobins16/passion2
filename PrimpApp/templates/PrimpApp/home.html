@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{% static 'PrimpApp/css/home.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Quicksand|Raleway:400,400i|Roboto:400,500i&display=swap" rel="stylesheet">
     <title>Home :: Primp </title>
 
     <style>
@@ -45,40 +47,24 @@
 <p> <img src="{{user.alluser.Profile_Picture}}" alt=""> </p>
 {% endif %}
 
-
-<button id = "use-location">Use my location</button><br/>
+<p><button id = "use-location" class="w3-button w3-block w3-red">Use My Location!</button></p>
 <p id = "status"></p>
 <div id="map"></div>
+
 <div class="content">
-    <form action="#" method="post">
+    <form id="searchfilter" action="#" method="post">
         <label for="maxRadius">Find locations within
             <input name="maxRadius" id="maxRadius" type="number" value="5" min="1" />
         </label>
+        miles
         <button id="submitLocationSearch">Search</button>
     </form>
 
-    <h2 id="location-search-alert">All Locations</h2>
-
-    <div id="stylists-near-you-map"></div>
-
-    <div id="stylists-near-you"></div>
-
-    <p id="tester"> Stylists in Your Area:</p>
-<div id="container">
+<br>
+    <p id="tester"> Stylists Near You:</p>
+<div id="stylist-near-you">
 
 
-{% for post in Stylist %}
-
-{% if post.Profile_Picture %}
-<p>
-    <img class="okay" src="{{post.Profile_Picture.url}}" alt="img">
-</p>
-{% endif%}
-
-<a class="usersid" href="{%url 'primper' post.user_id%}"><p> {{post.user}}</p></a>
-<p class="stylistid"> {{post.TypeofStylist}}</p>
-
-{% endfor %}
 </div>
 
 
@@ -90,8 +76,11 @@ var currentuserlongitude = {{currentUserlng}};
 <script>
     var stylists = {{stylists|safe}};
 </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4&libraries=geometry">
+    </script>
 
-<script>
+
+    <script>
     function PrimpMap() {
 
         function Locator() {
@@ -117,6 +106,18 @@ var currentuserlongitude = {{currentUserlng}};
                         console.log(info)
                     });
                 status.textContent = '';
+                // The marker positioned at currentuserlocation
+                let newmarker = new google.maps.Marker({
+                    animation: google.maps.Animation.DROP,
+                    position: home,
+                    title: tesst,
+                    icon: {
+                        url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+                    },
+                    map: map
+                });
+                newmarker.addListener('click', toggleBounce);
+
             }
 
             function error() {
@@ -132,30 +133,16 @@ var currentuserlongitude = {{currentUserlng}};
 
         }
 
-        var locations = stylists;
+        const locations = stylists;
         console.log(locations, stylists);
-        var bounds = new google.maps.LatLngBounds();
-        var markers = [];
+        const bounds = new google.maps.LatLngBounds();
+        const markers = [];
         console.log("hey");
-        var infoWindowContent = [];
+        const infoWindowContent = [];
         let home = {lat: currentuserlatitude, lng: currentuserlongitude};
 
-        let map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 2,
-            center: new google.maps.LatLng(currentuserlatitude, currentuserlongitude)
-        });
+        let map = new google.maps.Map(document.getElementById('map'));
 
-        // initialize map, centered at currentuserslocation
-
-        // The marker positioned at currentuserlocation
-        let newmarker = new google.maps.Marker({
-            position: home,
-            icon: {
-                url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
-            },
-            content: "YOU ARE HERE.",
-            map: map
-        });
 
 
         locations.forEach(function (location) {
@@ -173,7 +160,11 @@ var currentuserlongitude = {{currentUserlng}};
             var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
             bounds.extend(position);
             marker = new google.maps.Marker({
+
                 position: position,
+                icon: {
+                    url: "http://127.0.0.1:8000/static/PrimpApp/images/newprimpmarker.png"
+                },
                 map: map,
                 title: markers[i][0]
             });
@@ -186,96 +177,87 @@ var currentuserlongitude = {{currentUserlng}};
             })(marker, i));
 
             if (locations.length > 1) {
-                var maphome = new google.maps.LatLng(currentuserlatitude, currentuserlongitude);
-                map.fitBounds(bounds);
-                map.setCenter(home);
-                map.setZoom(25);
-            } else {
-                var center = new google.maps.LatLng(locations[0].fields.lat, locations[0].fields.lng);
+                var center = new google.maps.LatLng(currentuserlatitude, currentuserlongitude);
                 map.setCenter(center);
-                map.setZoom(15);
+                map.fitBounds(bounds);
             }
 
         }
 
-        function filterStylists(param) {
-            var geocoder = new google.maps.Geocoder();
-            var maxRadius = parseInt(document.getElementById('maxRadius').value, 10);
-            if (param && maxRadius) {
-                loco = getDistancedetails(param);
-            }
-
-        }
-
-        var stylistcoords = stylists.map(function (stylist) {
-            return {
-                lat: parseFloat(stylist.fields.lat),
-                lng: parseFloat(stylist.fields.lng),
-                name: stylist.fields.businessname,
-            }
-        });
-        function getDistancedetails(loco) {
-            var key = 'AIzaSyBdRX49meltvAx46ktO4zUqkP1I_ZHBgF4';
-            // #define user coordinates
-            var userlocation = new google.maps.LatLng(currentuserlatitude, currentuserlongitude);
+        function calculateDistance(){
 
 
-            var filteredStylists = stylistcoords.filter(isWithinRadius());
+            var userLatLng = new google.maps.LatLng(currentuserlatitude,currentuserlongitude);
+            console.log(userLatLng);
 
+            let newStylistList = stylists.map( eachStylist => {
+                var stylistLatLng = new google.maps.LatLng(eachStylist.fields.lat, eachStylist.fields.lng);
+                var distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(stylistLatLng, userLatLng);
+                eachStylist.distance = distanceBetween * 0.000621371;
+                return eachStylist
 
-            // #function to get radius/distance
-            function isWithinRadius(stylistLocation) {
-                var locationLatLng = new google.maps.LatLng(stylistLocation.lat, stylistLocation.lng);
-                var distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(locationLatLng, userlocation);
-                // #sends distance to converter funct
-                return convertMetersToMiles(distanceBetween) <= maxRadius;
-            }
-
-
-            if (filteredStylists.length > 0) {
-                PrimpMap(filteredStylists);
-                createListOfstylists(filteredStylists);
-                searchResultsAlert.innerHTML = 'Stylist Locations within ' + maxRadius + ' miles of ' + userAddress + ':';
-            } else {
-                console.log("nothing found!");
-                document.getElementById('stylists-near-you').innerHTML = '';
-                searchResultsAlert.innerHTML = 'Sorry, no stylists were found within ' + maxRadius + ' miles of ' + userAddress + '.';
-            }
-
-
-
-        }
-
-
-        //converts meters to miles
-
-        function convertMetersToMiles(meters) {
-            return (meters * 0.000621371);
-        }
-
-        //dynamic stylist list
-
-
-        function createListOfstylists(locations) {
-            var locationsList = document.getElementById('stylists-near-you');
-
-            // Clear any existing locations from the previous search first
-            locationsList.innerHTML = '';
-
-            locations.forEach(function (location) {
-                var eachStylist = document.createElement('div');
-                var StylistInfo = "<h3>" + location.fields.businessname + "</h3><p>" + location.fields.address + "</p>" +
-                    "<p>" + location.fields.city + ", " + location.fields.state + " " + location.fields.zip + "</p>";
-                eachStylist.setAttribute("class", 'stylists-near-you-box');
-                eachStylist.innerHTML = StylistInfo;
-                locationsList.appendChild(eachStylist);
             });
+            console.log(newStylistList);
+
+            function filterDistance(blahblah) {
+                console.log("hey");
+
+                let maxRadius = parseInt(document.getElementById('maxRadius').value);
+
+                let locationsList = document.getElementById('stylist-near-you');
+
+                locationsList.innerHTML = '';
+
+                blahblah.forEach(function (stylist) {
+                    if (maxRadius >= stylist.distance){
+                        console.log(maxRadius);
+                        console.log(stylist.distance);
+                        let eachLocation = document.createElement('img');
+                        eachLocation.src = "/" + stylist.fields.Profile_Picture;
+                        eachLocation.setAttribute("class", 'each-stylist');
+                        let locationInfo2 = "<h2>" + stylist.fields.BusinessName + "</h2>" +
+                            "<p>" + stylist.fields.address + " " + stylist.fields.city + " "
+                            + stylist.fields.state + " "+ stylist.fields.zip + "</p>" +
+                        "<p>" + "Located " + parseInt(stylist.distance) + " miles from you " + "</p>";
+
+                        locationsInfo = document.createElement('div');
+                        locationsInfo.innerHTML = locationInfo2;
+                        locationsInfo.setAttribute("class","stylist-information");
+                        let locationDetail = document.createElement('p');
+                        let type = stylist.fields.TypeofStylist;
+                        locationDetail.innerText = type;
+                        locationDetail.setAttribute('class','type');
+
+                        locationsList.appendChild(eachLocation);
+                        locationsList.appendChild(locationsInfo);
+                        locationsList.appendChild(locationDetail);
+
+
+                    }
+
+
+                })
+
+
+            }
+            newStylistList.sort();
+
+
+            document.querySelector('#submitLocationSearch').addEventListener('click', function(e) {
+                e.preventDefault();
+                filterDistance(newStylistList);
+
+            })
+
         }
+        calculateDistance();
+
+
 
 
         document.querySelector('#use-location').addEventListener('click', Locator);
 
-        document.querySelector('#submitLocationSearch').addEventListener('click', filterStylists(stylistcoords))
+
     }
 
 

@@ -1,9 +1,21 @@
+html{
+    margin: 0;
+    width: 100%;
+}
 *{
+    margin: 0;
     font-family: 'Nunito', sans-serif;
 }
 
-html{
-    background: #fdf0d5;
+body{
+    text-align: center;
+    width: 100%;
+    /*grid-template-columns: 33% 33% 33% ;*/
+    background: white;
+    margin: 0;
+    height: 100%;
+    padding-bottom: 5%;
+    /*display: grid;*/
 }
 #logos{
     height: auto;
@@ -23,38 +35,76 @@ header{
     padding-right: 2%;
 }
 #ok{
-    font-size: 13pt;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14pt;
 }
-#container{
-    display: grid;
-    grid-column: 1/4;
-    grid-column-template: 33% 33%, 33%;
 
-}
-.okay{
+.address{
     display: inline-block;
-    grid-column: 1;
-    padding-left: 2%;
-
-}
-.usersid{
-    display: inline-block;
+    text-align: left;
     grid-column: 2;
 }
 
-.stylistid{
-    display: inline-block;
-    grid-column:3;
+#searchfilter{
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background: white;
 }
+
 #tester{
-    display: inline-block;
+    color: #c26879;
+    margin-bottom: 5%;
+    font-size: 44px;
     text-align: center;
 }
-img {
-    height: 120px;
+.each-stylist {
+    margin-left: 5%;
+    border-radius: 12px;
+    margin-bottom: 10%;
+    width:200px;
+    height:200px;
+    object-fit:cover;
+    display: inline-block;
+    grid-column: 1;
+    margin-top: 1%;
+
+
 }
 
 .cover {
     width: 360px;
     object-fit: cover;
+}
+#use-location{
+    font-size: 19pt;
+}
+
+.each-stylist{
+    text-align: right;
+    grid-column: 1;
+}
+
+#stylist-near-you{
+    background: white ;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 30% 50% 20%;
+}
+
+h2{
+    font-size: 35px;
+    font-family: 'Nunito', sans-serif;
+}
+.stylist-information{
+    font-size: 22px;
+    text-align: left;
+}
+
+.type{
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    color: #c26879;
+    font-size: 20px;
+    font-style: italic;
 }

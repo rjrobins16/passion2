@@ -49,7 +49,8 @@ class AllUsersForm(ModelForm):
                     'TypeofStylist':forms.HiddenInput()}
         model = AllUser
         labels = {
-                        "DateOfBirth": "Date of Birth "
+                        "AccountType" : "Account Type",
+                        "DateOfBirth" : "Date of Birth "
                     }
         fields = '__all__'
 
@@ -65,6 +66,7 @@ class AllUsersForm2(ModelForm):
                     'TypeofStylist':forms.HiddenInput()}
         model = AllUser
         labels = {
-                        "DateOfBirth": "Date of Birth "
+                        "AccountType" : "Account Type",
+                        "DateOfBirth" : "Date of Birth"
                     }
         fields = '__all__'
