@@ -240,7 +240,10 @@ var currentuserlongitude = {{currentUserlng}};
 
 
             }
-            newStylistList.sort();
+
+            newStylistList.sort(function(a, b){
+                return a.distance-b.distance
+            });
 
 
             document.querySelector('#submitLocationSearch').addEventListener('click', function(e) {
