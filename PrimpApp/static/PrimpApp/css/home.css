@@ -19,7 +19,7 @@ body{
 }
 #logos{
     height: auto;
-    width: 15%;
+    width: 18%;
 
 }
 header{
@@ -47,14 +47,16 @@ header{
 }
 
 #searchfilter{
+    font-size: 18px;
     padding-top: 1%;
     padding-bottom: 1%;
     background: white;
 }
 
 #tester{
+    background: white;
     color: #c26879;
-    margin-bottom: 5%;
+    padding-bottom: 4%;
     font-size: 44px;
     text-align: center;
 }
@@ -93,8 +95,8 @@ header{
 }
 
 h2{
-    font-size: 35px;
-    font-family: 'Nunito', sans-serif;
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
 }
 .stylist-information{
     font-size: 22px;
@@ -107,4 +109,37 @@ h2{
     color: #c26879;
     font-size: 20px;
     font-style: italic;
+}
+
+#use-location{
+
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 2%;
+}
+.button2 {
+    font-family: 'Poppins', sans-serif;
+    background-color: #de798c;
+    opacity: 1;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 5px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#submitLocationSearch{
+
+    color: white;
+    background: #1abc9c;
 }

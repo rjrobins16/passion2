@@ -16,6 +16,7 @@
          * element that contains the map. */
         #map {
             height: 70%;
+            padding-top: 5%;
         }
         /* Optional: Makes the sample page fill the window. */
         html, body{
@@ -47,7 +48,7 @@
 <p> <img src="{{user.alluser.Profile_Picture}}" alt=""> </p>
 {% endif %}
 
-<p><button id = "use-location" class="w3-button w3-block w3-red">Use My Location!</button></p>
+<button id = "use-location"  class="button2"> Use My Location!</button>
 <p id = "status"></p>
 <div id="map"></div>
 
@@ -57,7 +58,7 @@
             <input name="maxRadius" id="maxRadius" type="number" value="5" min="1" />
         </label>
         miles
-        <button id="submitLocationSearch">Search</button>
+        <button id="submitLocationSearch" class="button2">Search</button>
     </form>
 
 <br>
@@ -112,7 +113,7 @@ var currentuserlongitude = {{currentUserlng}};
                     position: home,
                     title: tesst,
                     icon: {
-                        url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+                        url: "http://127.0.0.1:8000/static/PrimpApp/images/icons8.png"
                     },
                     map: map
                 });

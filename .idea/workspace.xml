@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11ff46a3-50e7-4790-a221-d695993451ec" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/editprofile.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/editprofile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/static/PrimpApp/css/profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/edit_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/edit_profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/PrimpApp/templates/PrimpApp/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
