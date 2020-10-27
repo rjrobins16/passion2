@@ -1,6 +1,6 @@
 asn1crypto==0.24.0
 Cheetah==2.4.4
-cryptography==2.1.4
+cryptography==3.2
 Django==1.11.27
 django-localflavor==2.2
 enum34==1.1.6
